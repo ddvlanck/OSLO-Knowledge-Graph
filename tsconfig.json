@@ -1,0 +1,19 @@
+{
+  "compilerOptions": {
+    "module": "commonjs",
+    "lib": [
+      "es6",
+      "dom"
+    ],
+    "target": "es6",
+    "sourceMap": true
+  },
+  "include": [
+    "index.ts",
+    "lib/**/*",
+    "bin/**/*"
+  ],
+  "exclude": [
+    "node_modules"
+  ]
+}

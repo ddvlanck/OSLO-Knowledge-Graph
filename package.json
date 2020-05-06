@@ -1,0 +1,29 @@
+{
+  "name": "oslo-knowledge-graph",
+  "version": "1.0.0",
+  "description": "This software project reads the configuration files of the OSLO vocabularies and application profiles and pushes the data in the database.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "tsc"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ddvlanck/OSLO-Knowledge-Graph.git"
+  },
+  "author": "Dwight Van Lancker - Information Flanders",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ddvlanck/OSLO-Knowledge-Graph/issues"
+  },
+  "homepage": "https://github.com/ddvlanck/OSLO-Knowledge-Graph#readme",
+  "dependencies": {
+    "@types/node": "^13.13.4",
+    "commander": "^5.1.0",
+    "elasticsearch": "^16.7.1",
+    "node-fetch": "^2.6.0"
+  },
+  "devDependencies": {
+    "typescript": "^3.8.3"
+  }
+}
