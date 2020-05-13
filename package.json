@@ -18,6 +18,7 @@
   },
   "homepage": "https://github.com/ddvlanck/OSLO-Knowledge-Graph#readme",
   "dependencies": {
+    "@govflanders/vl-ui-content-header": "^3.10.12",
     "@types/node": "^13.13.4",
     "commander": "^5.1.0",
     "elasticsearch": "^16.7.1",

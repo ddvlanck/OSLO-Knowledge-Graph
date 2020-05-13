@@ -14,7 +14,7 @@ program.on('--help', () => {
     console.log("It's used to add vocabularies, application profiles or other documents to our Elasticsearch engine");
     console.log("The program can be executed as follows:");
     console.log("node oslo-knowledge-graph.js -t <type>  -f <file>");
-    console.log("\t<type> can be 'terminology' or 'application profile'");
+    console.log("\t<type> can be 'terminology' or 'application_profile'");
     console.log("\t<file> is the URL of the JSON file");
 });
 
