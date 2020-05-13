@@ -33,14 +33,18 @@ export class ApplicationProfileObject implements IStoreObject {
 
         for (let object of data.classes) {
             let properties = new Array<ITerm>();
+
             for (let property of object.properties) {
-                properties.push(new PropertyTerm({
-                    prefLabel: property.name['nl'],
-                    URI: property.uri,
-                    definition: property.description['nl'],
-                    context: this.name,
-                    fragmentIdentifier: baseURI + '#' + object.name['nl'] + '%3A' + property.name['nl'].split(' ').join('%20')
-                }))
+                if (property.name['nl']) {
+                    properties.push(new PropertyTerm({
+                        prefLabel: property.name['nl'],
+                        URI: property.uri,
+                        definition: property.description['nl'],
+                        context: this.name,
+                        fragmentIdentifier: baseURI + '#' + object.name['nl'].split(' ').join('%20') + '%3A' + property.name['nl'].split(' ').join('%20')
+                    }))
+                }
+
             }
 
             this.classes.push(new APTerm({
@@ -49,7 +53,7 @@ export class ApplicationProfileObject implements IStoreObject {
                 definition: object.description['nl'],
                 properties: properties,
                 context: this.name,
-                fragmentIdentifier: baseURI + '#' + object.name['nl']
+                fragmentIdentifier: baseURI + '#' + object.name['nl'].split(' ').join('%20')
             }))
 
         }
