@@ -1,0 +1,22 @@
+[Mon May 18 2020 15:10:04 GMT+0200 (GMT+02:00)] - Added terminology of https://data.vlaanderen.be/ns/persoon to Elasticsearch
+[Mon May 18 2020 15:36:58 GMT+0200 (GMT+02:00)] - Added terminology of https://data.vlaanderen.be/ns/adres to Elasticsearch
+[Mon May 18 2020 15:40:51 GMT+0200 (GMT+02:00)] - Added terminology of http://data.vlaanderen.be/ns/besluit to Elasticsearch
+[Mon May 18 2020 15:41:18 GMT+0200 (GMT+02:00)] - Added terminology of https://data.vlaanderen.be/ns/besluitvorming to Elasticsearch
+[Mon May 18 2020 15:41:48 GMT+0200 (GMT+02:00)] - Added terminology of https://data.vlaanderen.be/ns/bestuur to Elasticsearch // Verify
+[Mon May 18 2020 15:42:37 GMT+0200 (GMT+02:00)] - Added terminology of https://data.vlaanderen.be/ns/dienst to Elasticsearch // Verify
+[Mon May 18 2020 15:43:09 GMT+0200 (GMT+02:00)] - Added terminology of https://data.vlaanderen.be/ns/dossier to Elasticsearch
+[Mon May 18 2020 15:54:50 GMT+0200 (GMT+02:00)] - Added terminology of https://data.vlaanderen.be/ns/gebouw to Elasticsearch
+[Mon May 18 2020 15:55:18 GMT+0200 (GMT+02:00)] - Added terminology of https://data.vlaanderen.be/ns/logies to Elasticsearch
+[Mon May 18 2020 15:55:38 GMT+0200 (GMT+02:00)] - Added terminology of http://data.vlaanderen.be/ns/mandaat to Elasticsearch
+[Mon May 18 2020 15:56:10 GMT+0200 (GMT+02:00)] - Added terminology of https://data.vlaanderen.be/ns/melding to Elasticsearch
+[Mon May 18 2020 15:57:13 GMT+0200 (GMT+02:00)] - Added terminology of https://data.vlaanderen.be/ns/mobiliteit/trips-en-aanbod to Elasticsearch
+[Mon May 18 2020 15:57:35 GMT+0200 (GMT+02:00)] - Added terminology of https://data.vlaanderen.be/ns/mobiliteit to Elasticsearch
+[Mon May 18 2020 15:58:10 GMT+0200 (GMT+02:00)] - Added terminology of https://data.vlaanderen.be/ns/notificatie to Elasticsearch
+[Mon May 18 2020 15:59:05 GMT+0200 (GMT+02:00)] - Added terminology of https://data.vlaanderen.be/ns/organisatie to Elasticsearch
+[Mon May 18 2020 15:59:45 GMT+0200 (GMT+02:00)] - Added terminology of https://data.vlaanderen.be/ns/perceel to Elasticsearch
+[Tue May 19 2020 10:53:36 GMT+0200 (GMT+02:00)] - Added terminology of https://data.vlaanderen.be/ns/subsidie to Elasticsearch
+[Tue May 19 2020 10:54:32 GMT+0200 (GMT+02:00)] - Added terminology of https://data.vlaanderen.be/ns/toestemming to Elasticsearch
+[Tue May 19 2020 10:55:10 GMT+0200 (GMT+02:00)] - Added terminology of https://data.vlaanderen.be/ns/transactie to Elasticsearch
+[Tue May 19 2020 10:58:23 GMT+0200 (GMT+02:00)] - Added terminology of https://data.vlaanderen.be/ns/openbaardomein/waterdeel to Elasticsearch
+[Tue May 19 2020 10:58:53 GMT+0200 (GMT+02:00)] - Added terminology of https://data.vlaanderen.be/ns/weg to Elasticsearch
+[Tue May 19 2020 10:59:12 GMT+0200 (GMT+02:00)] - Added terminology of https://data.vlaanderen.be/ns/wetgeving to Elasticsearch

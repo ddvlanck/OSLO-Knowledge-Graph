@@ -22,7 +22,9 @@
     "@types/node": "^13.13.4",
     "commander": "^5.1.0",
     "elasticsearch": "^16.7.1",
-    "node-fetch": "^2.6.0"
+    "fs": "0.0.1-security",
+    "node-fetch": "^2.6.0",
+    "util": "^0.12.3"
   },
   "devDependencies": {
     "typescript": "^3.8.3"

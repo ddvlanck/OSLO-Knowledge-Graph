@@ -1,5 +1,6 @@
 import {VocabularyTerm} from "./Term";
 import {IStoreObject} from "./IStoreObject";
+const Utils = require('../Utils.js');
 
 import * as fetch from 'node-fetch';
 import {ElasticsearchDAO} from "./ElasticsearchDAO";
@@ -26,6 +27,11 @@ export class VocabularyObject implements IStoreObject {
         //send data to Elasticsearch
         const elasticClient = new ElasticsearchDAO();
         elasticClient.pushData(this.terms, 'terminology', 'vocabularies');
+
+        const log = '[' + Date() + '] - Added terminology of ' + this.name + ' to Elasticsearch\n';
+
+        Utils.appendToFile('../logfile.txt', log);
+
     }
 
     private parseData(data: any) {
