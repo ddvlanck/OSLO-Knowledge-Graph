@@ -1,6 +1,5 @@
 
 
 export interface IStoreObject {
-
-    createStoreObject(file: string);
+    createStoreObject(url: string);
 }

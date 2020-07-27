@@ -3,28 +3,23 @@ import {APTerm, ITerm, PropertyTerm, TermType} from "./Term";
 import * as fetch from 'node-fetch';
 import {ElasticsearchDAO} from "./ElasticsearchDAO";
 
-export interface IApplicatinoProfileSettings {
-    file: string
-}
 
 export class ApplicationProfileObject implements IStoreObject {
 
-    private classes: Array<ITerm>;
+    private readonly classes: Array<ITerm>;
     private name: string;
-    file: string;
 
-    constructor(settings: IApplicatinoProfileSettings) {
+    constructor() {
         this.classes = new Array<ITerm>();
-        this.file = settings.file;
     }
 
-    async createStoreObject() {
-        const data = await fetch(this.file).then(response => response.json());
+    async createStoreObject(url: string) {
+        const data = await fetch(url).then(response => response.json());
         this.parseData(data);
 
         //send data to Elasticsearch
         const elasticClient = new ElasticsearchDAO();
-        elasticClient.pushData(this.classes, 'application_profiles', 'classes');
+        await elasticClient.pushData(this.classes, 'application_profiles', 'classes');
     }
 
     private parseData(data: any) {
