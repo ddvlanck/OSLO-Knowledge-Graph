@@ -1,5 +1,6 @@
 import {VocabularyObject} from "../lib/Elasticsearch/VocabularyObject";
 import {ApplicationProfileObject} from "../lib/Elasticsearch/ApplicationProfileObject";
+import {ElasticsearchDAO} from "../lib/Elasticsearch/ElasticsearchDAO";
 const program = require('commander');
 const readline = require('readline');
 const fs = require('fs');
@@ -37,12 +38,13 @@ if(type !== 'terminology' && type !== 'application_profile'){
     process.exit(1);
 }
 
-processBulkFile(bulkFile ? bulkFile : url, type, bulkFile ? true: false);
+processInput(bulkFile ? bulkFile : url, type, bulkFile ? true: false);
 
-async function processBulkFile(filename: string, type: string, bulk: boolean){
+async function processInput(filename: string, type: string, bulk: boolean){
+    await new ElasticsearchDAO().setupElasticsearch();
     if(type === 'terminology'){
-
         if(bulk){
+            console.log('[OSLO-Knowledge-Graph]: processing bulk input for terminology index');
             const stream = fs.createReadStream(filename);
             const rl = readline.createInterface({
                 input: stream,
@@ -50,14 +52,16 @@ async function processBulkFile(filename: string, type: string, bulk: boolean){
             });
 
             for await (const line of rl) {
-                new VocabularyObject().createStoreObject(line);
+                await new VocabularyObject().createStoreObject(line);
             }
         } else {
+            console.log('[OSLO-Knowledge-Graph]: processing url input for terminology index');
             new VocabularyObject().createStoreObject(filename);
         }
 
     } else {
         if(bulk){
+            console.log('[OSLO-Knowledge-Graph]: processing bulk input for application_profiles index');
             const stream = fs.createReadStream(filename);
             const rl = readline.createInterface({
                 input: stream,
@@ -65,9 +69,10 @@ async function processBulkFile(filename: string, type: string, bulk: boolean){
             });
 
             for await (const line of rl) {
-                new VocabularyObject().createStoreObject(line);
+                await new ApplicationProfileObject().createStoreObject(line);
             }
         } else {
+            console.log('[OSLO-Knowledge-Graph]: processing url input for application_profiles index');
             new ApplicationProfileObject().createStoreObject(filename);
         }
     }

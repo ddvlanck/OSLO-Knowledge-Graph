@@ -4,11 +4,28 @@ const config = require('../../config.json');
 
 export class ElasticsearchDAO {
 
+    async setupElasticsearch(){
+        const client = this.connectToElasticsearch();
+        const terminologyIndexExists = await this.checkIfIndexExists(client, 'terminology');
+        const applicationProfileIndexExists = await this.checkIfIndexExists(client, 'application_profiles');
+
+        if(!terminologyIndexExists){
+            console.log('[ElasticsearchDAO]: terminology index does not exist on setup. Creating it. ');
+            this.createIndex(client, 'terminology');
+        }
+
+        if(!applicationProfileIndexExists){
+            console.log('[ElasticsearchDAO]: application_profiles index does not exist on setup. Creating it. ');
+            this.createIndex(client, 'application_profiles');
+        }
+    }
+
     async pushData(data: Array<ITerm>, index: string, type: string) {
         const client = this.connectToElasticsearch();
         const indexExists = await this.checkIfIndexExists(client, index);
 
         if (!indexExists) {
+            console.log('[ElasticsearchDAO]: ' + index + ' does not exist yet. Creating it.');
             this.createIndex(client, index);
         }
 
