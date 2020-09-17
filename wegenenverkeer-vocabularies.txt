@@ -1,0 +1,7 @@
+https://raw.githubusercontent.com/Informatievlaanderen/OSLO-Generated/wegenenverkeer/report/doc/vocabularium/wegenenverkeer/abstracten/ontwerpdocument/v29/html-nj.json
+https://raw.githubusercontent.com/Informatievlaanderen/OSLO-Generated/wegenenverkeer/report/doc/vocabularium/wegenenverkeer/implementatieelement/ontwerpdocument/v29/html-nj.json
+https://raw.githubusercontent.com/Informatievlaanderen/OSLO-Generated/wegenenverkeer/report/doc/vocabularium/wegenenverkeer/installatie/ontwerpdocument/v29/html-nj.json
+https://raw.githubusercontent.com/Informatievlaanderen/OSLO-Generated/wegenenverkeer/report/doc/vocabularium/wegenenverkeer/levelofgeometry/ontwerpdocument/v29/html-nj.json
+https://raw.githubusercontent.com/Informatievlaanderen/OSLO-Generated/wegenenverkeer/report/doc/vocabularium/wegenenverkeer/levenscyclus/ontwerpdocument/v29/html-nj.json
+https://raw.githubusercontent.com/Informatievlaanderen/OSLO-Generated/wegenenverkeer/report/doc/vocabularium/wegenenverkeer/onderdeel/ontwerpdocument/v29/html-nj.json
+https://raw.githubusercontent.com/Informatievlaanderen/OSLO-Generated/wegenenverkeer/report/doc/vocabularium/wegenenverkeer/proefenmeting/ontwerpdocument/v29/html-nj.json
