@@ -1,10 +1,10 @@
-import {IStoreObject} from "./IStoreObject";
+import {Document} from "./Document";
 import {APTerm, ITerm, PropertyTerm, TermType} from "./Term";
 import * as fetch from 'node-fetch';
 import {ElasticsearchDAO} from "./ElasticsearchDAO";
 
 
-export class ApplicationProfileObject implements IStoreObject {
+export class ApplicationProfile implements Document {
 
     private readonly classes: Array<ITerm>;
     private name: string;
@@ -13,13 +13,31 @@ export class ApplicationProfileObject implements IStoreObject {
         this.classes = new Array<ITerm>();
     }
 
-    async createStoreObject(url: string) {
+    async createDocuments(files: Array<string>, isUpdate: boolean) {
+        for(let file of files){
+            await this.createDocument(file);
+            const elasticClient = new ElasticsearchDAO();
+            if(isUpdate){
+                this.updateElastic(elasticClient);
+            } else {
+                this.insertIntoElastic(elasticClient);
+            }
+        }
+    }
+
+    async createDocument(url: string) {
         const data = await fetch(url).then(response => response.json());
         this.parseData(data);
+    }
 
-        //send data to Elasticsearch
-        const elasticClient = new ElasticsearchDAO();
-        await elasticClient.pushData(this.classes, 'application_profiles', 'classes');
+    async insertIntoElastic(client: ElasticsearchDAO){
+        await client.pushData(this.classes, 'application_profiles', 'classes');
+        console.log('[ApplicationProfile]: added terminology of ' + this.name + ' to Elasticsearch\n');
+    }
+
+    async updateElastic(client: ElasticsearchDAO){
+        await client.updateApplicationProfile(this.classes);
+        console.log('[ApplicationProfile]: updated terminology of ' + this.name + ' to Elasticsearch\n');
     }
 
     private parseData(data: any) {

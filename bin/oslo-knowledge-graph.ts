@@ -1,6 +1,6 @@
-import {VocabularyObject} from "../lib/Elasticsearch/VocabularyObject";
-import {ApplicationProfileObject} from "../lib/Elasticsearch/ApplicationProfileObject";
-import {ElasticsearchDAO} from "../lib/Elasticsearch/ElasticsearchDAO";
+import {Vocabulary} from "../lib/Vocabulary";
+import {ApplicationProfile} from "../lib/ApplicationProfile";
+import {ElasticsearchDAO} from "../lib/ElasticsearchDAO";
 const program = require('commander');
 const readline = require('readline');
 const fs = require('fs');
@@ -10,7 +10,8 @@ program
     .usage('converts vocabularies, application profiles or other documents to a JSON structure and adds it to Elasticsearch')
     .option('-t, --type <type>', 'type of the input data')
     .option('-f, --file <path>', 'URL of the JSON data')
-    .option('-b, --bulk <path>', 'file containing all URLs that need to be inserted');
+    .option('-b, --bulk <path>', 'file containing all URLs that need to be inserted')
+    .option('--update', 'update instead of create');
 
 program.on('--help', () => {
     console.log('');
@@ -24,6 +25,8 @@ program.on('--help', () => {
 
 program.parse(process.argv);
 
+//TODO: change to program handle updates too
+
 if(process.argv.length === 0){
     console.error('Please provide a file to process along with what type of data it is');
     process.exit(1);
@@ -32,50 +35,37 @@ if(process.argv.length === 0){
 const type = program.type;
 const url = program.file || null;
 const bulkFile = program.bulk || null;
+const update = program.update || false;
+
 
 if(type !== 'terminology' && type !== 'application_profile'){
     console.error('Type should be terminology or application_profile');
     process.exit(1);
 }
 
-processInput(bulkFile ? bulkFile : url, type, bulkFile ? true: false);
+processInput(bulkFile ? bulkFile : url, type, bulkFile ? true: false, update);
 
-async function processInput(filename: string, type: string, bulk: boolean){
+async function processInput(filename: string, type: string, bulk: boolean, update: boolean){
     await new ElasticsearchDAO().setupElasticsearch();
-    if(type === 'terminology'){
-        if(bulk){
-            console.log('[OSLO-Knowledge-Graph]: processing bulk input for terminology index');
-            const stream = fs.createReadStream(filename);
-            const rl = readline.createInterface({
-                input: stream,
-                crlfDelay: Infinity
-            });
+    let files = new Array<string>();
 
-            for await (const line of rl) {
-                await new VocabularyObject().createStoreObject(line);
-            }
-        } else {
-            console.log('[OSLO-Knowledge-Graph]: processing url input for terminology index');
-            new VocabularyObject().createStoreObject(filename);
+    if(bulk){
+        const stream = fs.createReadStream(filename);
+        const rl = readline.createInterface({
+            input: stream,
+            crlfDelay: Infinity
+        });
+
+        for await (const line of rl) {
+            files.push(line);
         }
-
     } else {
-        if(bulk){
-            console.log('[OSLO-Knowledge-Graph]: processing bulk input for application_profiles index');
-            const stream = fs.createReadStream(filename);
-            const rl = readline.createInterface({
-                input: stream,
-                crlfDelay: Infinity
-            });
+        files.push(filename);
+    }
 
-            for await (const line of rl) {
-                await new ApplicationProfileObject().createStoreObject(line);
-            }
-        } else {
-            console.log('[OSLO-Knowledge-Graph]: processing url input for application_profiles index');
-            new ApplicationProfileObject().createStoreObject(filename);
-        }
+    if(type === 'terminology'){
+        new Vocabulary().createDocuments(files, update);
+    } else {
+        new ApplicationProfile().createDocuments(files, update);
     }
 }
-
-//TODO: other documents

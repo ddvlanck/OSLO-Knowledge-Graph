@@ -1,2 +1,2 @@
-export * from './lib/Elasticsearch/VocabularyObject';
-export * from './lib/Elasticsearch/ElasticsearchDAO';
+export * from './lib/Vocabulary';
+export * from './lib/ElasticsearchDAO';

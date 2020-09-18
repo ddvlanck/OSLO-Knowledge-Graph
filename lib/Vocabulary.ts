@@ -1,11 +1,10 @@
 import {VocabularyTerm} from "./Term";
-import {IStoreObject} from "./IStoreObject";
-const Utils = require('../Utils.js');
+import {Document} from "./Document";
 
 import * as fetch from 'node-fetch';
 import {ElasticsearchDAO} from "./ElasticsearchDAO";
 
-export class VocabularyObject implements IStoreObject {
+export class Vocabulary implements Document {
 
     private readonly terms: Array<VocabularyTerm>;
     private name: string;
@@ -14,18 +13,32 @@ export class VocabularyObject implements IStoreObject {
         this.terms = new Array<VocabularyTerm>();
     }
 
-    async createStoreObject(filename: string) {
+    async createDocuments(files: Array<string>, isUpdate: boolean) {
+        for(let file of files){
+            await this.createDocument(file);
+            const elasticClient = new ElasticsearchDAO();
+            if(isUpdate){
+                this.updateElastic(elasticClient);
+            } else {
+                this.insertIntoElastic(elasticClient);
+            }
+        }
+    }
+
+    async createDocument(filename: string) {
         const data = await fetch(filename).then(response => response.json());
         this.parseData(data);
 
-        //send data to Elasticsearch
-        const elasticClient = new ElasticsearchDAO();
-        await elasticClient.pushData(this.terms, 'terminology', 'vocabularies');
+    }
 
-        const log = '[' + Date() + '] - Added terminology of ' + this.name + ' to Elasticsearch\n';
+    async insertIntoElastic(client: ElasticsearchDAO){
+        await client.pushData(this.terms, 'terminology', 'vocabularies');
+        console.log('[Vocabulary]: added terminology of ' + this.name + ' to Elasticsearch\n');
+    }
 
-        await Utils.appendToFile('../logfile.txt', log);
-
+    async updateElastic(client: ElasticsearchDAO){
+        await client.updateVocabulary(this.terms);
+        console.log('[Vocabulary]: updated terminology of ' + this.name + ' to Elasticsearch\n');
     }
 
     private parseData(data: any) {

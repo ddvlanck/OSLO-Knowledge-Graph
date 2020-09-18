@@ -1,5 +1,5 @@
 {
-  "ELASTIC_ENDPOINT": "",
+  "ELASTIC_ENDPOINT": "localhost:9200",
   "USERNAME" : "",
   "PASSWORD" : ""
 }
