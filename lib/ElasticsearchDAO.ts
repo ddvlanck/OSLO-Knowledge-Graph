@@ -87,7 +87,7 @@ export class ElasticsearchDAO {
         // Perform bulk indexing of the data passed
         client.bulk({body: bulk}, function (err, response) {
             if (err) {
-                console.log("Failed Bulk Update ", err)
+                console.log("[ElasticsearchDAO]: failed Bulk Update ", err)
             } else {
                 console.log("[ElasticsearchDAO]: updated succeeded");
             }
@@ -130,7 +130,7 @@ export class ElasticsearchDAO {
         // Perform bulk indexing of the data passed
         client.bulk({body: bulk}, function (err, response) {
             if (err) {
-                console.log("Failed Bulk Update ", err)
+                console.log("[ElasticsearchDAO]: failed Bulk Update ", err)
             } else {
                 console.log("[ElasticsearchDAO]: updated succeeded");
             }
@@ -174,7 +174,7 @@ export class ElasticsearchDAO {
             if (error) {
                 console.log(error);
             } else {
-                console.log("Created a new index: " + name, response);
+                console.log("[ElasticsearchDAO]: created a new index: " + name, response);
             }
         });
     }
@@ -195,19 +195,16 @@ export class ElasticsearchDAO {
                     }
                 });
                 bulk.push(term);
-            } else {
-                console.log("NOT ADDING");
             }
-
         }
 
         if (bulk.length) {
             // Perform bulk indexing of the data passed
             client.bulk({body: bulk}, function (err, response) {
                 if (err) {
-                    console.log("Failed bulk operation ", err)
+                    console.log("[ElasticsearchDAO]: failed bulk operation ", err)
                 } else {
-                    console.log("Successfully imported ", data.length);
+                    console.log("[ElasticsearchDAO]: successfully imported ", data.length);
                 }
             });
         }
