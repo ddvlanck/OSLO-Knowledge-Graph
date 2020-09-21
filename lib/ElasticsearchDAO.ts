@@ -33,19 +33,6 @@ export class ElasticsearchDAO {
         this.pushDataInBulk(client, type, index, data);
     }
 
-    async sendUpdate(body: Object, index: string, type: string, client: elasticsearch.Client) {
-        //TODO: this shows an error, but it still works
-        try {
-            client.updateByQuery({
-                index: index,
-                type: type,
-                body: body
-            })
-        } catch (e) {
-            console.log("ERROR");
-        }
-    }
-
     async getId(uri: string, index: string, type: string, client: elasticsearch.Client) {
         const result = await client.search({
             index: index,
@@ -107,7 +94,6 @@ export class ElasticsearchDAO {
         });
     }
 
-    //TODO: add term if not yet in ES
     async updateApplicationProfile(data: Array<ITerm>) {
         const client = this.connectToElasticsearch();
         let bulk = [];
