@@ -32,7 +32,7 @@ node bin/oslo-knowledge-graph.js -b "ZZZZZZZ" -t "YYYYYYY"
 
 ### Update
 
-Since standards in OSLO can be updated, it must also be possible to update the corresponding data in Elasticsearch. To execute an update, users can use the same methods as described above, but they pass the `--update` parameter to the program. For example, to update all standards that are in the vocabularies.txt file, the users has to execute the following command:
+Since standards in OSLO can be updated, it must also be possible to update the corresponding data in Elasticsearch. To execute an update, users can use the same methods as described above, but they pass the `--update` parameter to the program. For example, to update all standards that are in the vocabularies.txt file, users have to execute the following command:
 ```
 node bin/oslo-knowledge-graph.js --update -b "ZZZZZZZ" -t "YYYYYYY"
 ```
