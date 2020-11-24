@@ -31,7 +31,7 @@ export class ApplicationProfile implements Document {
     }
 
     async insertIntoElastic(client: ElasticsearchDAO){
-        await client.pushData(this.classes, 'application_profiles', 'classes');
+        await client.pushData(this.classes, 'oslo-application-profiles', 'classes');
         console.log('[ApplicationProfile]: added terminology of ' + this.name + ' to Elasticsearch\n');
     }
 

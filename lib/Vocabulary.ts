@@ -32,7 +32,7 @@ export class Vocabulary implements Document {
     }
 
     async insertIntoElastic(client: ElasticsearchDAO){
-        await client.pushData(this.terms, 'terminology', 'vocabularies');
+        await client.pushData(this.terms, 'oslo-terminology', 'vocabularies');
         console.log('[Vocabulary]: added terminology of ' + this.name + ' to Elasticsearch\n');
     }
 

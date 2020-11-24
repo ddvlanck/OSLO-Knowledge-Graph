@@ -7,17 +7,17 @@ export class ElasticsearchDAO {
 
     async setupElasticsearch() {
         const client = this.connectToElasticsearch();
-        const terminologyIndexExists = await this.checkIfIndexExists(client, 'terminology');
-        const applicationProfileIndexExists = await this.checkIfIndexExists(client, 'application_profiles');
+        const terminologyIndexExists = await this.checkIfIndexExists(client, 'oslo-terminology');
+        const applicationProfileIndexExists = await this.checkIfIndexExists(client, 'oslo-application-profiles');
 
         if (!terminologyIndexExists) {
-            console.log('[ElasticsearchDAO]: terminology index does not exist on setup. Creating it. ');
-            await this.createIndex(client, 'terminology');
+            console.log('[ElasticsearchDAO]: oslo-terminology index does not exist on setup. Creating it. ');
+            await this.createIndex(client, 'oslo-terminology');
         }
 
         if (!applicationProfileIndexExists) {
-            console.log('[ElasticsearchDAO]: application_profiles index does not exist on setup. Creating it. ');
-            await this.createIndex(client, 'application_profiles');
+            console.log('[ElasticsearchDAO]: oslo-application-profiles index does not exist on setup. Creating it. ');
+            await this.createIndex(client, 'oslo-application-profiles');
         }
     }
 
@@ -55,12 +55,12 @@ export class ElasticsearchDAO {
         const client = this.connectToElasticsearch();
         let bulk = [];
         for (let term of data) {
-            const id = await this.getId(term.URI, 'terminology', 'vocabularies', client);
+            const id = await this.getId(term.URI, 'oslo-terminology', 'vocabularies', client);
             if (!id) {
                 // Term is not yet in ES
                 bulk.push({
                     index: {
-                        _index: 'terminology',
+                        _index: 'oslo-terminology',
                         _type: 'vocabularies'
                     }
                 });
@@ -68,7 +68,7 @@ export class ElasticsearchDAO {
             } else {
                 bulk.push({
                     update: {
-                        _index: 'terminology',
+                        _index: 'oslo-terminology',
                         _type: 'vocabularies',
                         _id: id
                     }
@@ -98,12 +98,12 @@ export class ElasticsearchDAO {
         const client = this.connectToElasticsearch();
         let bulk = [];
         for (let term of data) {
-            const id = await this.getId(term.URI, 'application_profile', 'classes', client);
+            const id = await this.getId(term.URI, 'oslo-application-profiles', 'classes', client);
             if (!id) {
                 // Term is not yet in ES
                 bulk.push({
                     index: {
-                        _index: 'application_profile',
+                        _index: 'oslo-application-profiles',
                         _type: 'classes'
                     }
                 });
@@ -111,7 +111,7 @@ export class ElasticsearchDAO {
             } else {
                 bulk.push({
                     update: {
-                        _index: 'application_profile',
+                        _index: 'oslo-application-profiles',
                         _type: 'classes',
                         _id: id
                     }
@@ -139,7 +139,11 @@ export class ElasticsearchDAO {
 
     private connectToElasticsearch(): elasticsearch.Client {
         const client = new elasticsearch.Client({
-            host: config.ELASTIC_ENDPOINT
+            host: config.ELASTIC_ENDPOINT,
+            httpAuth: `${config.USERNAME}:${config.PASSWORD}`,
+            ssl: {
+                rejectUnauthorized: false
+            }
         });
 
         client.ping({

@@ -37,7 +37,6 @@ const url = program.file || null;
 const bulkFile = program.bulk || null;
 const update = program.update || false;
 
-
 if(type !== 'terminology' && type !== 'application_profile'){
     console.error('Type should be terminology or application_profile');
     process.exit(1);
