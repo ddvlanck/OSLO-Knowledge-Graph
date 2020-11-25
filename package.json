@@ -2,7 +2,7 @@
   "name": "oslo-knowledge-graph",
   "version": "1.0.0",
   "description": "This software project reads the configuration files of the OSLO vocabularies and application profiles and pushes the data in the database.",
-  "main": "index.js",
+  "main": "oslo-knowledge-graph.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "tsc"
@@ -18,9 +18,9 @@
   },
   "homepage": "https://github.com/ddvlanck/OSLO-Knowledge-Graph#readme",
   "dependencies": {
+    "@elastic/elasticsearch": "^7.10.0",
     "@types/node": "^13.13.4",
     "commander": "^5.1.0",
-    "elasticsearch": "^16.7.1",
     "fs": "0.0.1-security",
     "node-fetch": "^2.6.1",
     "readline": "^1.3.0",

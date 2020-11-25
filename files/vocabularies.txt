@@ -1,14 +1,14 @@
 https://raw.githubusercontent.com/Informatievlaanderen/OSLO-Generated/test/report/doc/vocabularium/adres/ontwerpdocument/2020-01-06/html-nj.json
 https://raw.githubusercontent.com/Informatievlaanderen/OSLO-Generated/test/report/doc/vocabularium/bedrijventerrein/kandidaatstandaard/2020-04-23/html-nj.json
 https://raw.githubusercontent.com/Informatievlaanderen/OSLO-Generated/test/report/doc/vocabularium/besluit/ontwerpdocument/2020-01-06/html-nj.json
-https://raw.githubusercontent.com/Informatievlaanderen/OSLO-Generated/test/report/doc/vocabularium/besluitvorming/erkendestandaard/2020-06-18/html-nj.json
+https://raw.githubusercontent.com/Informatievlaanderen/OSLO-Generated/test/report/doc/vocabularium/besluitvorming/kandidaatstandaard/2020-03-31/html-nj.json
 https://raw.githubusercontent.com/Informatievlaanderen/OSLO-Generated/test/report/doc/vocabularium/bestuur/ontwerpdocument/niet-bepaald/html-nj.json
 https://raw.githubusercontent.com/Informatievlaanderen/OSLO-Generated/test/report/doc/vocabularium/cultureel-erfgoed/kandidaatstandaard/2020-07-17/html-nj.json
 https://raw.githubusercontent.com/Informatievlaanderen/OSLO-Generated/test/report/doc/vocabularium/dienst/ontwerpdocument/2020-01-06/html-nj.json
-https://raw.githubusercontent.com/Informatievlaanderen/OSLO-Generated/test/report/doc/vocabularium/dossier/erkendestandaard/2020-06-18/html-nj.json
+https://raw.githubusercontent.com/Informatievlaanderen/OSLO-Generated/test/report/doc/vocabularium/dossier/kandidaatstandaard/2020-06-01/html-nj.json
 https://raw.githubusercontent.com/Informatievlaanderen/OSLO-Generated/test/report/doc/vocabularium/gebouw/ontwerpdocument/2020-01-06/html-nj.json
 https://raw.githubusercontent.com/Informatievlaanderen/OSLO-Generated/test/report/doc/vocabularium/generiek/zonderstatus/2019-07-01/html-nj.json
-https://raw.githubusercontent.com/Informatievlaanderen/OSLO-Generated/test/report/doc/vocabularium/logies/standaard/2019-03-14/html-nj.json
+https://raw.githubusercontent.com/Informatievlaanderen/OSLO-Generated/test/report/doc/vocabularium/logies/ontwerpstandaard/2019-03-14/html-nj.json
 https://raw.githubusercontent.com/Informatievlaanderen/OSLO-Generated/test/report/doc/vocabularium/mandaat/ontwerpdocument/2020-01-06/html-nj.json
 https://raw.githubusercontent.com/Informatievlaanderen/OSLO-Generated/test/report/doc/vocabularium/melding/ontwerpdocument/2020-01-06/html-nj.json
 https://raw.githubusercontent.com/Informatievlaanderen/OSLO-Generated/test/report/doc/vocabularium/mobiliteit-trips-en-aanbod/erkendestandaard/2020-04-23/html-nj.json

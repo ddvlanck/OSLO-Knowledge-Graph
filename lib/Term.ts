@@ -1,6 +1,6 @@
 export interface ITermSettings {
     prefLabel: string,
-    URI: string,
+    id: string,
     definition: string,
     context: string,
     properties?: Array<ITerm>
@@ -15,13 +15,13 @@ export enum TermType {
 
 export interface ITerm {
     prefLabel: string
-    URI: string,
+    id: string,
     definition: string,
     context: string
 }
 
 export class VocabularyTerm implements ITerm {
-    URI: string;
+    id: string;
     definition: string;
     prefLabel: string;
     termType: TermType;
@@ -29,7 +29,7 @@ export class VocabularyTerm implements ITerm {
 
     constructor(settings: ITermSettings) {
         this.prefLabel = settings.prefLabel;
-        this.URI = settings.URI;
+        this.id = settings.id;
         this.definition = settings.definition;
         this.termType = TermType.VOCABULARY_TERM;
         this.context = settings.context;
@@ -37,7 +37,7 @@ export class VocabularyTerm implements ITerm {
 }
 
 export class APTerm implements ITerm {
-    URI: string;
+    id: string;
     definition: string;
     prefLabel: string;
     termType: TermType;
@@ -55,7 +55,7 @@ export class APTerm implements ITerm {
         this.properties = settings.properties;
         this.context = settings.context;
         this.prefLabel = settings.prefLabel;
-        this.URI = settings.URI;
+        this.id = settings.id;
         this.definition = settings.definition;
         this.termType = TermType.APPLICATION_PROFILE_TERM;
         this.fragmentIdentifier = settings.fragmentIdentifier;
@@ -63,7 +63,7 @@ export class APTerm implements ITerm {
 }
 
 export class PropertyTerm implements ITerm {
-    URI: string;
+    id: string;
     definition: string;
     prefLabel: string;
     termType: TermType;
@@ -73,7 +73,7 @@ export class PropertyTerm implements ITerm {
 
     constructor(settings: ITermSettings) {
         this.prefLabel = settings.prefLabel;
-        this.URI = settings.URI;
+        this.id = settings.id;
         this.definition = settings.definition;
         this.context = settings.context;
         this.termType = TermType.PROPERTY;

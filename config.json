@@ -1,5 +1,9 @@
 {
-  "ELASTIC_ENDPOINT": "localhost:9200",
+  "ELASTIC_ENDPOINT": "http://localhost:9200",
   "USERNAME" : "",
-  "PASSWORD" : ""
+  "PASSWORD" : "",
+  "VOCABULARY_INDEX": "oslo-terminology",
+  "VOCABULARY_INDEX_TYPE" : "oslo-terminology-type",
+  "APPLICATION_PROFILE_INDEX" : "oslo-application-profiles",
+  "APPLICATION_PROFILE_INDEX_TYPE" : "oslo-application-profiles-type"
 }

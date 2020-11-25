@@ -1,9 +1,8 @@
-import {Vocabulary} from "../lib/Vocabulary";
-import {ApplicationProfile} from "../lib/ApplicationProfile";
-import {ElasticsearchDAO} from "../lib/ElasticsearchDAO";
+import {Processor} from "../lib/Processor";
 const program = require('commander');
 const readline = require('readline');
 const fs = require('fs');
+const config = require('../config.json');
 
 program
     .version('0.1.0')
@@ -19,13 +18,11 @@ program.on('--help', () => {
     console.log("It's used to add vocabularies, application profiles or other documents to our Elasticsearch engine");
     console.log("The program can be executed as follows:");
     console.log("node oslo-knowledge-graph.js -t <type>  -f <file>");
-    console.log("\t<type> can be 'terminology' or 'application_profile'");
-    console.log("\t<file> is the URL of the JSON file");
+    console.log("\t<type> can be 'terminology' or 'application-profile'");
+    console.log("\t<file> is the URL of the raw JSON file");
 });
 
 program.parse(process.argv);
-
-//TODO: change to program handle updates too
 
 if(process.argv.length === 0){
     console.error('Please provide a file to process along with what type of data it is');
@@ -37,16 +34,18 @@ const url = program.file || null;
 const bulkFile = program.bulk || null;
 const update = program.update || false;
 
-if(type !== 'terminology' && type !== 'application_profile'){
-    console.error('Type should be terminology or application_profile');
+if(type !== 'ap' && type !== 'voc'){
+    console.error('Type should be voc or ap');
     process.exit(1);
 }
+
 
 processInput(bulkFile ? bulkFile : url, type, bulkFile ? true: false, update);
 
 async function processInput(filename: string, type: string, bulk: boolean, update: boolean){
-    await new ElasticsearchDAO().setupElasticsearch();
     let files = new Array<string>();
+    const indexType = type === 'voc' ? config.VOCABULARY_INDEX : config.APPLICATION_PROFILE_INDEX;
+
 
     if(bulk){
         const stream = fs.createReadStream(filename);
@@ -61,10 +60,5 @@ async function processInput(filename: string, type: string, bulk: boolean, updat
     } else {
         files.push(filename);
     }
-
-    if(type === 'terminology'){
-        new Vocabulary().createDocuments(files, update);
-    } else {
-        new ApplicationProfile().createDocuments(files, update);
-    }
+    new Processor(files, indexType)
 }
