@@ -1,4 +1,5 @@
 import {Processor} from "../lib/Processor";
+import {Elastic} from "../lib/Elastic";
 const program = require('commander');
 const readline = require('readline');
 const fs = require('fs');
@@ -39,13 +40,11 @@ if(type !== 'ap' && type !== 'voc'){
     process.exit(1);
 }
 
-
 processInput(bulkFile ? bulkFile : url, type, bulkFile ? true: false, update);
 
 async function processInput(filename: string, type: string, bulk: boolean, update: boolean){
     let files = new Array<string>();
     const indexType = type === 'voc' ? config.VOCABULARY_INDEX : config.APPLICATION_PROFILE_INDEX;
-
 
     if(bulk){
         const stream = fs.createReadStream(filename);
@@ -60,5 +59,5 @@ async function processInput(filename: string, type: string, bulk: boolean, updat
     } else {
         files.push(filename);
     }
-    new Processor(files, indexType)
+    new Processor(files, indexType, update)
 }

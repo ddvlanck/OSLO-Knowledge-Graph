@@ -7,14 +7,11 @@ export class Elastic {
 
     constructor() {
         this.client = this.getClient();
-        //this.checkElasticStatus();
+        this.checkElasticStatus()
     }
 
-    initElasticsearch() {
-        //TODO
-    }
 
-    async pushData(document, index) {
+    async indexData(document, index) {
         const body = document.flatMap(doc => [{index: {_index: index, _id: doc.id}}, doc]);
         const {body: bulkResponse} = await this.client.bulk({refresh: true, body});
 
@@ -41,6 +38,18 @@ export class Elastic {
         }
     }
 
+    async updateData(document, index){
+        for(let object of document){
+            await this.client.update({
+                index: index,
+                id: object.id,
+                body: {
+                    doc: object
+                }
+            });
+        }
+    }
+
     private getClient(): Client {
         return new Client({
             node: config.ELASTIC_ENDPOINT,
@@ -54,7 +63,7 @@ export class Elastic {
         });
     }
 
-    async checkElasticStatus() {
+    private async checkElasticStatus() {
         await this.checkElasticsearchHealth();
         await this.checkIndicesHealth();
     }
@@ -70,14 +79,21 @@ export class Elastic {
 
     private checkIndicesHealth() {
         this.checkIndexStatus(config.VOCABULARY_INDEX).then(response => {
-            response.body === false ?
-                console.log(`[Elastic]: index ${config.VOCABULARY_INDEX} does not exist in this elasticsearch instance. Please create it before running this program`) :
+            if(response.body === false){
+                console.log(`[Elastic]: index ${config.VOCABULARY_INDEX} does not exist in this elasticsearch instance. The index will be created now.`)
+                this.createIndex(config.VOCABULARY_INDEX);
+            } else {
                 console.log(`[Elastic]: index ${config.VOCABULARY_INDEX} exists and is healthy.`)
+            }
+
         });
         this.checkIndexStatus(config.APPLICATION_PROFILE_INDEX).then(response => {
-            response.body === false ?
-                console.log(`[Elastic]: index ${config.APPLICATION_PROFILE_INDEX} does not exist in this elasticsearch instance. Please create it before running this program`) :
+            if(response.body === false){
+                console.log(`[Elastic]: index ${config.APPLICATION_PROFILE_INDEX} does not exist in this elasticsearch instance. The index will be created now.`)
+                this.createIndex(config.APPLICATION_PROFILE_INDEX);
+            } else {
                 console.log(`[Elastic]: index ${config.APPLICATION_PROFILE_INDEX} exists and is healthy.`)
+            }
         });
     }
 
@@ -98,7 +114,7 @@ export class Elastic {
         });
     }
 
-    setMappingForIndex(index: string, mapping) {
+    private setMappingForIndex(index: string, mapping) {
         this.client.indices.putMapping({
             index: index,
             body: mapping
@@ -112,7 +128,7 @@ export class Elastic {
     private async checkIndexStatus(index: string) {
         return this.client.indices.exists({index: index})
     }
-
+    
     /* Mapping functions */
 
     private getVocabularyMapping() {
@@ -126,8 +142,28 @@ export class Elastic {
         }
     }
 
+
     private getApplicationProfileMapping() {
-        return {}
+        return {
+            properties: {
+                prefLabel: {"type": "text"},
+                id: {"type": "text"},
+                context: {"type": "text"},
+                definition: {"type": "text"},
+                fragmentIdentifier: {"type": "text"},
+                classProperties : {
+                    type: "nested",
+                    properties : {
+                        prefLabel: {"type": "text"},
+                        id: {"type": "text"},
+                        context: {"type": "text"},
+                        definition: {"type": "text"},
+                        fragmentIdentifier: {"type": "text"},
+                    }
+                }
+
+            }
+        }
     }
 
 

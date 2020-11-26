@@ -10,11 +10,13 @@ export class Processor {
     private readonly files: Array<string>;
     private elastic: Elastic;
     private filesWithError: Array<string>;
+    private isUpdate: boolean;
 
-    constructor(files: Array<string>, type: string) {
+    constructor(files: Array<string>, type: string, isUpdate) {
         this.files = files;
         this.elastic = new Elastic();
         this.filesWithError = new Array<string>();
+        this.isUpdate = isUpdate
         this.processFiles(type);
     }
 
@@ -33,12 +35,12 @@ export class Processor {
 
     createVocabularyDocument(data){
         const document = Vocabulary.createDocument(data);
-        this.elastic.pushData(document, config.VOCABULARY_INDEX)
+        this.isUpdate === true ? this.elastic.updateData(document, config.VOCABULARY_INDEX) : this.elastic.indexData(document, config.VOCABULARY_INDEX);
     }
 
     createApplicationProfileDocument(data){
         const document = ApplicationProfile.createDocument(data);
-        this.elastic.pushData(document, config.APPLICATION_PROFILE_INDEX)
+        this.isUpdate === true ? this.elastic.updateData(document, config.APPLICATION_PROFILE_INDEX) : this.elastic.indexData(document, config.APPLICATION_PROFILE_INDEX);
     }
 
     printSummary(){

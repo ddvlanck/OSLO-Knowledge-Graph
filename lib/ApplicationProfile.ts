@@ -1,10 +1,10 @@
 import {APTerm, ITerm, PropertyTerm} from "./Term";
 
-export class ApplicationProfile  {
+export class ApplicationProfile {
 
-    static createDocument(data){
+    static createDocument(data) {
         const name = data.metadata.uri;
-        const baseuri = data.metadata.navigation.self;
+        const baseUri = data.metadata.navigation.self;
         let classes = []
 
         for (let object of data.classes) {
@@ -17,7 +17,7 @@ export class ApplicationProfile  {
                         id: property.uri,
                         definition: property.description['nl'],
                         context: name,
-                        fragmentIdentifier: baseuri + '#' + object.name['nl'].split(' ').join('%20') + '%3A' + property.name['nl'].split(' ').join('%20')
+                        fragmentIdentifier: `${baseUri}#${object.name['nl'].split(' ').join('%20')}%3A${property.name['nl'].split(' ').join('%20')}`
                     }))
                 }
 
@@ -27,13 +27,11 @@ export class ApplicationProfile  {
                 prefLabel: object.name['nl'],
                 id: object.uri,
                 definition: object.description['nl'],
-                properties: properties,
+                classProperties: properties,
                 context: name,
-                fragmentIdentifier: baseuri + '#' + object.name['nl'].split(' ').join('%20')
+                fragmentIdentifier:`${baseUri}#${object.name['nl'].split(' ').join('%20')}`
             }))
-
         }
-
         return classes;
     }
 }
