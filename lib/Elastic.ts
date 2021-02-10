@@ -1,5 +1,6 @@
 import {Client} from '@elastic/elasticsearch';
 const config = require('../config.json');
+const hash = require('object-hash');
 
 export class Elastic {
 
@@ -10,13 +11,13 @@ export class Elastic {
         this.checkElasticStatus()
     }
 
-
     async indexData(document, index) {
-        const body = document.flatMap(doc => [{index: {_index: index, _id: doc.id}}, doc]);
+        const body = document.flatMap(object => [{index: { _index: index, _id: this.createhash(object)}}, object]);
         const {body: bulkResponse} = await this.client.bulk({refresh: true, body});
 
         if (bulkResponse.errors) {
-            const erroredDocuments = []
+            console.log(`[Elasticsearch]: some errors occurred while adding the data:`)
+            const erroredDocuments = [];
             // The items array has the same order of the dataset we just indexed.
             // The presence of the `error` key indicates that the operation
             // that we did for the document has failed.
@@ -35,6 +36,8 @@ export class Elastic {
                 }
             })
             console.log(erroredDocuments)
+        } else {
+            console.log(`[Elasticsearch]: insert number of terms is: ${bulkResponse.items.length}`);
         }
     }
 
@@ -128,7 +131,7 @@ export class Elastic {
     private async checkIndexStatus(index: string) {
         return this.client.indices.exists({index: index})
     }
-    
+
     /* Mapping functions */
 
     private getVocabularyMapping() {
@@ -164,6 +167,10 @@ export class Elastic {
 
             }
         }
+    }
+
+    private createhash(object){
+        return hash(object);
     }
 
 

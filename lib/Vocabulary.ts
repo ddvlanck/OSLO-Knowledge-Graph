@@ -3,15 +3,16 @@ import {VocabularyTerm} from "./Term";
 export class Vocabulary  {
 
     static createDocument(data){
-        //const name = data.metadata.uri;
+        const domain = data.metadata.uri;
         let terms = [];
-        // Get classes and properties from the vocabulary
+
+        // Get classes, properties and external terms from the vocabulary
         for(let object of data.classes){
             terms.push(new VocabularyTerm({
                 prefLabel: object.name['nl'],
                 id: object.uri,
                 definition: object.description['nl'],
-                context: data.metadata.uri
+                context: domain
             }));
         }
 
@@ -20,7 +21,16 @@ export class Vocabulary  {
                 prefLabel: object.name['nl'],
                 id: object.uri,
                 definition: object.description['nl'],
-                context: data.metadata.uri
+                context: domain
+            }));
+        }
+
+        for(let object of data.external_terms){
+            terms.push(new VocabularyTerm({
+                prefLabel: object.name['nl'],
+                id: object.uri,
+                definition: object.description['nl'],
+                context: domain
             }));
         }
 
